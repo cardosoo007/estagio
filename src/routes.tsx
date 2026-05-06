@@ -1,16 +1,28 @@
 import React from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import App from "./App";
 import Calendario from "./Calendario";
+import Equipas from "./Equipas";
+import Torneios from "./Torneios";
+import Classificacoes from "./Classificacoes";
+import Marcadores from "./Marcadores";
+import Configuracoes from "./Configuracoes";
 
-const Routes = () => {
+const AppRouter = () => {
     return (
         <BrowserRouter>
-            <Route element={<Calendario />} path="/calendario" />
-            <Route element={<App />} path="/" />
+            <Routes>
+                <Route element={<Calendario />} path="/calendario" />
+                <Route element={<Equipas />} path="/equipas" />
+                <Route element={<Torneios />} path="/torneios" />
+                <Route element={<Classificacoes />} path="/classificacoes" />
+                <Route element={<Marcadores />} path="/marcadores" />
+                <Route element={<Configuracoes />} path="/configuracoes" />
+                <Route element={<App />} path="/" />
+            </Routes>
         </BrowserRouter>
     );
 };
 
-export default Routes;
+export default AppRouter;
