@@ -7,8 +7,8 @@ import Calendario from "./Calendario";
 const Routes = () => {
     return (
         <BrowserRouter>
-            <Route component={App} path="/" exact />
-            <Route component={Calendario} path="/calendario" />
+            <Route element={<Calendario />} path="/calendario" />
+            <Route element={<App />} path="/" />
         </BrowserRouter>
     );
 };
