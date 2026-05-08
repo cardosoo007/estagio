@@ -16,7 +16,7 @@ function Jogador() {
         <div>
             <h1>Detalhes do Jogador</h1>
             <p>Nome: {jogador.nome}</p>
-            <p>Equipa: {jogador.equipa}</p>
+            <p>Equipa: {jogador.equipas}</p>
             <p>Golos: {jogador.golos}</p>
 
         </div>

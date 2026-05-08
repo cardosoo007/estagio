@@ -1,3 +1,4 @@
+import { cursorTo } from "node:readline";
 import { useEffect, useState } from "react";
 
 function Marcadores() {
@@ -19,7 +20,9 @@ function Marcadores() {
 
             <ul>
                 {listaMarcadores.map(marcador => (
-                    <li key={marcador.jogador}>
+                    <li key={marcador.jogador}
+                        style={{ cursor: "pointer" }}
+                    >
                         {marcador.jogador} - {marcador.golos}
                     </li>
                 ))}
