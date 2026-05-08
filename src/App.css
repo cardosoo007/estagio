@@ -1,5 +1,9 @@
-.dinheiro{
+.dinheiro {
   border-radius: 35%;
   display: block;
   margin: 0 auto;
+}
+
+.marcador {
+  cursor: pointer;
 }

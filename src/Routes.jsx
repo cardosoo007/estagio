@@ -8,6 +8,7 @@ import Torneios from "./Torneios";
 import Classificacoes from "./Classificacoes";
 import Marcadores from "./Marcadores";
 import Configuracoes from "./Configuracoes";
+import Jogador from "./Jogador";
 
 const AppRouter = () => {
     return (
@@ -19,7 +20,10 @@ const AppRouter = () => {
                 <Route element={<Classificacoes />} path="/classificacoes" />
                 <Route element={<Marcadores />} path="/marcadores" />
                 <Route element={<Configuracoes />} path="/configuracoes" />
+                <Route element={<Jogador />} path="/jogador/:id" />
                 <Route element={<App />} path="/" />
+
+
             </Routes>
         </BrowserRouter>
     );
