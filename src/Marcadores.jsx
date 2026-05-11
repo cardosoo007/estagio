@@ -20,8 +20,10 @@ function Marcadores() {
 
             <ul>
                 {listaMarcadores.map((marcador) => (
-                    <li key={marcador.id}>
-                        <Link to={`/jogador/${marcador.id}`}>
+                    <li
+                        key={marcador.id}>
+                        <Link
+                            to={`/jogador/${marcador.id}`}>
                             {marcador.jogador} - {marcador.golos}
                         </Link>
                     </li>
@@ -30,5 +32,6 @@ function Marcadores() {
         </div>
     );
 }
+
 
 export default Marcadores;

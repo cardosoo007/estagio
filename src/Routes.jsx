@@ -9,6 +9,7 @@ import Classificacoes from "./Classificacoes";
 import Marcadores from "./Marcadores";
 import Configuracoes from "./Configuracoes";
 import Jogador from "./Jogador";
+import Equipa from "./Equipa";
 
 const AppRouter = () => {
     return (
@@ -16,14 +17,15 @@ const AppRouter = () => {
             <Routes>
                 <Route element={<Calendario />} path="/calendario" />
                 <Route element={<Equipas />} path="/equipas" />
+                <Route element={<Equipa />} path="/equipas/:id" />
                 <Route element={<Torneios />} path="/torneios" />
                 <Route element={<Classificacoes />} path="/classificacoes" />
                 <Route element={<Marcadores />} path="/marcadores" />
                 <Route element={<Configuracoes />} path="/configuracoes" />
                 <Route element={<Jogador />} path="/jogador/:id" />
+
+
                 <Route element={<App />} path="/" />
-
-
             </Routes>
         </BrowserRouter>
     );
