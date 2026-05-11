@@ -10,6 +10,7 @@ import Marcadores from "./Marcadores";
 import Configuracoes from "./Configuracoes";
 import Jogador from "./Jogador";
 import Equipa from "./Equipa";
+import Admin from "./admin/Admin";
 
 const AppRouter = () => {
     return (
@@ -22,6 +23,7 @@ const AppRouter = () => {
                 <Route element={<Classificacoes />} path="/classificacoes" />
                 <Route element={<Marcadores />} path="/marcadores" />
                 <Route element={<Configuracoes />} path="/configuracoes" />
+                <Route element={<Admin />} path="/admin" />
                 <Route element={<Jogador />} path="/jogador/:id" />
 
 
