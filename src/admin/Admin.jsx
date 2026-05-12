@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react';
 
 function Admin() {
+  // guarda os dados das equipas obtidas da API
   const [adicionarEquipa, setAdicionarEquipa] = useState({});
 
+  // carrega os dados das equipas apenas uma vez quando o componente é montado
   useEffect(() => {
     fetch(`/api/equipas`)
       .then(response => response.json())
       .then(data => setAdicionarEquipa(data));
   }, []);
 
+  // envia os dados do formulário para criar uma nova equipa
   function search(formData) {
     const nomeTreinador = formData.get('nomeTreinador');
     const nomeEquipa = formData.get('nomeEquipa');
@@ -33,6 +36,7 @@ function Admin() {
     <div>
       <h1>Admin</h1>
       <p>Gere as tuas equipas</p>
+      {/* o formulário chama a função search quando é submetido */}
       <form action={search}>
         <label htmlFor="nomeEquipa">Equipa</label>
         <br></br>
