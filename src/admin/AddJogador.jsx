@@ -4,7 +4,7 @@ function AddJogador() {
   const [adicionarJogador, setAdicionarJogador] = useState({});
 
   useEffect(() => {
-    fetch(`/api/equipas`)
+    fetch(`/api/jogadores`)
       .then(response => response.json())
       .then(data => setAdicionarJogador(data));
   }, []);
@@ -19,8 +19,7 @@ function AddJogador() {
     const novoJogador = { nomeJogador, idadeJogador, posicao, nomeEquipa, golos };
 
     console.log(novoJogador);
-
-    fetch('/api/marcadores', {
+    fetch('/api/jogadores', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -35,11 +34,11 @@ function AddJogador() {
       <h1>Admin</h1>
       <p>Adiciona aqui Jogador</p>
       <form action={search}>
-        <label htmlFor="nomeJogador">Jogador</label>
+        <label htmlFor="nome">Jogador</label>
         <br></br>
         <input type="text" name="nomeJogador"></input>
         <br></br>
-        <label htmlFor="idadeJogador">Idade Jogador</label>
+        <label htmlFor="idade">Idade Jogador</label>
         <br></br>
         <input type="number" name="idadeJogador"></input>
         <br></br>
@@ -47,7 +46,7 @@ function AddJogador() {
         <br></br>
         <input type="text" name="posicao"></input>
         <br></br>
-        <label htmlFor="nomeEquipa">Equipa</label>
+        <label htmlFor="equipa">Equipa</label>
         <br></br>
         <input type="text" name="nomeEquipa"></input>
         <br></br>
