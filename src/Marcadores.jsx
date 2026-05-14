@@ -22,7 +22,7 @@ function Marcadores() {
         {listaMarcadores.map(marcador => (
           <li key={marcador.id}>
             <Link to={`/jogadores/${marcador.id}`}>
-              {marcador.jogador} - {marcador.golos}
+              {marcador.nome} - {marcador.golos}
             </Link>
           </li>
         ))}
