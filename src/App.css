@@ -1,9 +1,6 @@
-.dinheiro {
-  border-radius: 35%;
-  display: block;
-  margin: 0 auto;
-}
-
-.marcador {
-  cursor: pointer;
+.pagina-principal {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  height: 100vh;
 }

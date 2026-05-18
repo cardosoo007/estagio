@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import './Jogadores.css';
 
 function Jogadores() {
   // guarda a lista de jogadores obtida da API
@@ -19,11 +20,10 @@ function Jogadores() {
   return (
     <div>
       <h1>Jogadores</h1>
-      <p>Todos os Jogadores </p>
 
       <ul>
         {listaJogadores.map(jogador => (
-          <li key={jogador.id}>
+          <li className="jogador-estilo" key={jogador.id}>
             <Link to={`/jogadores/${jogador.id}`}>
               {jogador.nome} - {jogador.golos}
             </Link>
