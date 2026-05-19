@@ -14,7 +14,6 @@ function Marcadores() {
         setTotalPaginas(Math.ceil(data.total / 5));
       });
   }, [paginaAtual]);
-  console.log({ totalPaginas, paginaAtual });
   return (
     <div>
       <h1>Marcadores</h1>
