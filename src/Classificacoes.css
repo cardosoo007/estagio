@@ -1,0 +1,23 @@
+.tabela-classificacoes {
+  margin: 40px auto;
+  border-collapse: collapse;
+  width: 80%;
+  text-align: center;
+}
+.tabela-classificacoes th {
+  background-color: #6af652;
+  color: rgb(0, 0, 0);
+  padding: 12px;
+}
+
+.tabela-classificacoes td {
+  padding: 10px;
+  color: rgb(0, 0, 0);
+}
+.tabela-classificacoes tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+.tabela-classificacoes tr:nth-child(even) {
+  background-color: #ffffff;
+}
