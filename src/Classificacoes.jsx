@@ -35,7 +35,10 @@ function Classificacoes() {
           {classificacoes.map(classificacao => (
             <tr key={classificacao.posicao}>
               <td>{classificacao.posicao}</td>
-              <td>{classificacao.equipa}</td>
+              <td className="equipa-com-logotipo">
+                <img src={classificacao.logotipo} alt={classificacao.equipa} width="16" height="16" />
+                {classificacao.equipa}
+              </td>
               <td>{classificacao.vitorias}</td>
               <td>{classificacao.empates}</td>
               <td>{classificacao.derrotas}</td>
