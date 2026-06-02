@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Box, Button, Heading, HStack, List, Text } from '@chakra-ui/react';
 
 function Marcadores() {
   const [listaMarcadores, setListaMarcadores] = useState([]);
@@ -15,30 +16,34 @@ function Marcadores() {
       });
   }, [paginaAtual]);
   return (
-    <div>
-      <h1>Marcadores</h1>
-      <p>melhores marcadores</p>
+    <Box>
+      <Heading mb="2">Marcadores</Heading>
+      <Text mb="4">melhores marcadores</Text>
 
-      <ul>
+      <List.Root>
         {listaMarcadores.map(marcador => (
-          <li key={marcador.id}>
+          <List.Item key={marcador.id}>
             <Link to={`/jogadores/${marcador.id}`}>
               {marcador.nome} - {marcador.golos}
             </Link>
-          </li>
+          </List.Item>
         ))}
-      </ul>
+      </List.Root>
 
-      <button onClick={() => setPaginaAtual(paginaAtual - 1)} disabled={paginaAtual === 0}>
-        Anterior
-      </button>
-      <span>
-        Página {paginaAtual + 1} de {totalPaginas}
-      </span>
-      <button onClick={() => setPaginaAtual(paginaAtual + 1)} disabled={paginaAtual === totalPaginas - 1}>
-        Proxima
-      </button>
-    </div>
+      <HStack mt="4">
+        <Button onClick={() => setPaginaAtual(paginaAtual - 1)} disabled={paginaAtual === 0}>
+          Anterior
+        </Button>
+
+        <Text>
+          Página {paginaAtual + 1} de {totalPaginas}
+        </Text>
+
+        <Button onClick={() => setPaginaAtual(paginaAtual + 1)} disabled={paginaAtual === totalPaginas - 1}>
+          Proxima
+        </Button>
+      </HStack>
+    </Box>
   );
 }
 

@@ -1,23 +1,62 @@
+/* Estilos principais da tabela de classificações */
 .tabela-classificacoes {
+  /* Dá espaço acima/abaixo da tabela e centra horizontalmente */
   margin: 40px auto;
+
+  /* Junta as bordas das células para a tabela ficar mais limpa */
   border-collapse: collapse;
+
+  /* A tabela ocupa 80% da largura da página */
   width: 80%;
+
+  /* Centra o texto dentro das células */
   text-align: center;
 }
+
+/* Estilos dos cabeçalhos da tabela */
 .tabela-classificacoes th {
+  /* Cor de fundo dos títulos da tabela */
   background-color: #6af652;
+
+  /* Cor do texto dos títulos */
   color: rgb(0, 0, 0);
+
+  /* Espaçamento interno dos títulos */
   padding: 12px;
 }
 
+/* Estilos das células da tabela */
 .tabela-classificacoes td {
+  /* Espaçamento interno das células */
   padding: 10px;
+
+  /* Cor do texto das células */
   color: rgb(0, 0, 0);
 }
+
+/* Linhas ímpares da tabela */
 .tabela-classificacoes tr:nth-child(odd) {
+  /* Fundo cinzento claro para alternar as cores das linhas */
   background-color: #f2f2f2;
 }
 
+/* Linhas pares da tabela */
 .tabela-classificacoes tr:nth-child(even) {
+  /* Fundo branco para alternar as cores das linhas */
   background-color: #ffffff;
+}
+.dropdown {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.equipa-com-logotipo img {
+  width: 16px;
+  height: 16px;
+}
+
+.equipa-com-logotipo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }

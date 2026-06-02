@@ -1,10 +1,12 @@
+import { Box, Button, Heading, HStack, Text, VStack } from '@chakra-ui/react';
+
 function Configuracoes() {
-    return (
-        <div>
-            <h1>Configurações</h1>
-            <p>Definições</p>
-        </div>
-    );
+  return (
+    <HStack>
+      <Button>Click me</Button>
+      <Button>Click me</Button>
+    </HStack>
+  );
 }
 
 export default Configuracoes;
