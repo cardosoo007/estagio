@@ -21,3 +21,11 @@
   background-color: #555555;
   color: white;
 }
+
+.footer {
+  background-color: #6af652;
+  color: black;
+  margin-top: 60px;
+  padding: 20px 16px;
+  text-align: right;
+}

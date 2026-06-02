@@ -15,6 +15,7 @@ function Layout() {
         <Link to="/configuracoes">Configurações</Link>
       </nav>
       <Outlet />
+      <footer className="footer">Construido por Rodrigo Cardoso</footer>
     </div>
   );
 }
