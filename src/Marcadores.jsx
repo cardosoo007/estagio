@@ -1,33 +1,49 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Box, Button, Heading, HStack, List, Text } from '@chakra-ui/react';
 
 function Marcadores() {
   const [listaMarcadores, setListaMarcadores] = useState([]);
+  const [paginaAtual, setPaginaAtual] = useState(0);
+  const [totalPaginas, setTotalPaginas] = useState(1);
 
   useEffect(() => {
-    fetch('/api/marcadores')
+    fetch(`/api/marcadores?pagina=${paginaAtual}&items=5`)
       .then(response => response.json())
       .then(data => {
-        setListaMarcadores(data);
+        setListaMarcadores(data.items);
+        setTotalPaginas(Math.ceil(data.total / 5));
       });
-  }, []);
-  console.log(listaMarcadores);
-
+  }, [paginaAtual]);
   return (
-    <div>
-      <h1>Marcadores</h1>
-      <p>melhores marcadores</p>
+    <Box>
+      <Heading mb="2">Marcadores</Heading>
+      <Text mb="4">melhores marcadores</Text>
 
-      <ul>
+      <List.Root>
         {listaMarcadores.map(marcador => (
-          <li key={marcador.id}>
+          <List.Item key={marcador.id}>
             <Link to={`/jogadores/${marcador.id}`}>
               {marcador.nome} - {marcador.golos}
             </Link>
-          </li>
+          </List.Item>
         ))}
-      </ul>
-    </div>
+      </List.Root>
+
+      <HStack mt="4">
+        <Button onClick={() => setPaginaAtual(paginaAtual - 1)} disabled={paginaAtual === 0}>
+          Anterior
+        </Button>
+
+        <Text>
+          Página {paginaAtual + 1} de {totalPaginas}
+        </Text>
+
+        <Button onClick={() => setPaginaAtual(paginaAtual + 1)} disabled={paginaAtual === totalPaginas - 1}>
+          Proxima
+        </Button>
+      </HStack>
+    </Box>
   );
 }
 

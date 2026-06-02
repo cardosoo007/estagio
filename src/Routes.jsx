@@ -13,24 +13,26 @@ import Equipa from './Equipa';
 import Jogadores from './Jogadores.jsx';
 import Admin from './admin/Admin';
 import AdminJogador from './admin/AddJogador';
+import Layout from './Layout.jsx';
 
 const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<Calendario />} path="/calendario" />
-        <Route element={<Equipas />} path="/equipas" />
-        <Route element={<Equipa />} path="/equipas/:id" />
-        <Route element={<Torneios />} path="/torneios" />
-        <Route element={<Classificacoes />} path="/classificacoes" />
-        <Route element={<Marcadores />} path="/marcadores" />
-        <Route element={<Jogadores />} path="/jogadores" />
-        <Route element={<Configuracoes />} path="/configuracoes" />
-        <Route element={<Admin />} path="/admin" />
-        <Route element={<AdminJogador />} path="/admin/adjogador" />
-        <Route element={<Jogador />} path="/jogadores/:id" />
-
-        <Route element={<App />} path="/" />
+        <Route element={<Layout />}>
+          <Route element={<Calendario />} path="/calendario" />
+          <Route element={<Equipas />} path="/equipas" />
+          <Route element={<Equipa />} path="/equipas/:id" />
+          <Route element={<Torneios />} path="/torneios" />
+          <Route element={<Classificacoes />} path="/classificacoes" />
+          <Route element={<Marcadores />} path="/marcadores" />
+          <Route element={<Jogadores />} path="/jogadores" />
+          <Route element={<Configuracoes />} path="/configuracoes" />
+          <Route element={<Admin />} path="/admin" />
+          <Route element={<AdminJogador />} path="/admin/adjogador" />
+          <Route element={<Jogador />} path="/jogadores/:id" />
+          <Route element={<App />} path="/" />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
