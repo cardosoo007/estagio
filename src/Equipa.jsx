@@ -7,32 +7,36 @@ function Equipa() {
   const [jogadores, setJogadores] = useState([]);
 
   useEffect(() => {
+    if (!id) {
+      return;
+    }
+
     fetch(`/api/equipas/${id}`)
       .then(response => response.json())
-      .then(data => setEquipa(data));
-  }, []);
-  useEffect(() => {
-    fetch(`/api/equipas/${id}/jogadores`)
-      .then(response => response.json())
-      .then(data => setJogadores(data));
-  }, []);
+      .then(data => {
+        setEquipa(data);
+      });
+  }, [id]);
 
-  console.log(equipa);
   return (
     <div>
       <h1>Detalhes da Equipa</h1>
-      <p>Equipa: {equipa.equipa}</p>
-      <p>Treinador: {equipa.treinador?.nome}</p>
-      <p>Pontos: {equipa.pontos}</p>
-      <br></br>
+
+      <img src={equipa.crest} alt={equipa.name} width="100" />
+      <br />
+      <p>Nome: {equipa.name}</p>
+      <p>Nome curto: {equipa.shortName}</p>
+      <p>Treinador: {equipa.coach?.name}</p>
+      <p>Estádio: {equipa.venue}</p>
+      <p>Fundação: {equipa.founded}</p>
+      <br />
       <h2>Jogadores</h2>
-      {jogadores.map(jogador => (
+      {equipa.squad?.map(jogador => (
         <div key={jogador.id}>
-          <p>Nome: {jogador.nome}</p>
-          <p>Idade: {jogador.idade}</p>
-          <p>Posição: {jogador.posicao}</p>
-          <p>Golos: {jogador.golos}</p>
-          <br></br>
+          <p>Nome: {jogador.name}</p>
+          <p>Posição: {jogador.position}</p>
+          <p>Nacionalidade: {jogador.nationality}</p>
+          <br />
         </div>
       ))}
     </div>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './Classificacoes.css';
 import { NativeSelect } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 
 const ligas = [
   { codigo: 'PPL', nome: 'Primeira Liga' },
@@ -22,6 +23,8 @@ function Classificacoes() {
         setClassificacoes(data);
       });
   }, [ligaSelecionada]);
+
+  console.log(classificacoes);
 
   return (
     <div>
@@ -60,7 +63,7 @@ function Classificacoes() {
               <td>{classificacao.posicao}</td>
               <td className="equipa-com-logotipo">
                 <img src={classificacao.logotipo} alt={classificacao.equipa} width="16" height="16" />
-                {classificacao.equipa}
+                <Link to={`/equipas/${classificacao.equipaIdApi}`}>{classificacao.equipa}</Link>
               </td>
               <td>{classificacao.vitorias}</td>
               <td>{classificacao.empates}</td>
