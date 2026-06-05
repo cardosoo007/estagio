@@ -1,19 +1,20 @@
 import { useEffect, useState } from 'react';
 
+// Página para adicionar um novo jogador.
 function AddJogador() {
-  // guarda os dados retornados de /api/jogadores (aqui não está a usar depois)
+  // Dados de jogadores lidos do backend (não usados diretamente na renderização).
   const [adicionarJogador, setAdicionarJogador] = useState({});
-  // guarda a lista de equipas que vem do backend
+  // Lista de equipas usada para preencher o select do formulário.
   const [equipas, setEquipas] = useState([]);
 
-  // busca jogadores do backend quando o componente monta pela primeira vez
+  // Busca a lista de jogadores quando o componente é montado.
   useEffect(() => {
     fetch(`/api/jogadores`)
       .then(response => response.json())
       .then(data => setAdicionarJogador(data));
   }, []);
 
-  // busca a lista de equipas do backend quando o componente monta
+  // Busca as equipas para o menu de seleção.
   useEffect(() => {
     fetch('/api/equipas')
       .then(response => response.json())
@@ -21,14 +22,13 @@ function AddJogador() {
   }, []);
 
   function search(formData) {
-    // lê os valores dos campos do formulário
+    // Lê os valores dos campos do formulário.
     const nomeJogador = formData.get('nomeJogador');
     const idadeJogador = formData.get('idadeJogador');
     const posicao = formData.get('posicao');
     const nomeEquipa = formData.get('nomeEquipa');
     const golos = formData.get('golos');
 
-    // monta o objeto que vamos enviar para criar um novo jogador
     const novoJogador = { nomeJogador, idadeJogador, posicao, nomeEquipa, golos };
 
     console.log(novoJogador);
@@ -47,20 +47,20 @@ function AddJogador() {
       <h1>Admin</h1>
       <p>Adiciona aqui Jogador</p>
       <form action={search}>
-        <label htmlFor="nome">Jogador</label>
-        <br></br>
-        <input type="text" name="nomeJogador"></input>
-        <br></br>
+        <label htmlFor="nomeJogador">Jogador</label>
+        <br />
+        <input type="text" name="nomeJogador" />
+        <br />
         <label htmlFor="idadeJogador">Idade Jogador</label>
-        <br></br>
-        <input type="number" name="idadeJogador"></input>
-        <br></br>
-        <label htmlFor="posicao">Posicao</label>
-        <br></br>
-        <input type="text" name="posicao"></input>
-        <br></br>
+        <br />
+        <input type="number" name="idadeJogador" />
+        <br />
+        <label htmlFor="posicao">Posição</label>
+        <br />
+        <input type="text" name="posicao" />
+        <br />
         <label htmlFor="nomeEquipa">Equipa</label>
-        <br></br>
+        <br />
         <select name="nomeEquipa">
           <option value="">Escolhe uma equipa</option>
           {equipas.map(equipa => (
@@ -69,12 +69,12 @@ function AddJogador() {
             </option>
           ))}
         </select>
-        <br></br>
+        <br />
         <label htmlFor="golos">Golos</label>
-        <br></br>
-        <input type="number" name="golos"></input>
-        <br></br>
-        <input type="submit" value="Submit"></input>
+        <br />
+        <input type="number" name="golos" />
+        <br />
+        <input type="submit" value="Submit" />
       </form>
     </div>
   );

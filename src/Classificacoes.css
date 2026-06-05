@@ -60,3 +60,7 @@
   align-items: center;
   gap: 6px;
 }
+.clicavel {
+  cursor: pointer;
+  user-select: none;
+}

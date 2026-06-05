@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react';
 
+// Página de administração para criar novas equipas.
 function Admin() {
-  // guarda os dados das equipas obtidas da API
+  // Estado usado para guardar os dados de equipas retornados pela API.
   const [adicionarEquipa, setAdicionarEquipa] = useState({});
 
-  // carrega os dados das equipas apenas uma vez quando o componente é montado
+  // Busca os dados de equipas quando o componente é montado.
   useEffect(() => {
     fetch(`/api/equipas`)
       .then(response => response.json())
       .then(data => setAdicionarEquipa(data));
   }, []);
 
-  // envia os dados do formulário para criar uma nova equipa
+  // Ao submeter o formulário, envia os dados para o backend.
   function search(formData) {
     const nomeTreinador = formData.get('nomeTreinador');
     const nomeEquipa = formData.get('nomeEquipa');
@@ -36,25 +37,25 @@ function Admin() {
     <div>
       <h1>Admin</h1>
       <p>Gere as tuas equipas</p>
-      {/* o formulário chama a função search quando é submetido */}
+      {/* O formulário envia a nova equipa para o backend quando submetido. */}
       <form action={search}>
         <label htmlFor="nomeEquipa">Equipa</label>
-        <br></br>
-        <input type="text" name="nomeEquipa"></input>
-        <br></br>
+        <br />
+        <input type="text" name="nomeEquipa" />
+        <br />
         <label htmlFor="nomeTreinador">Nome Treinador</label>
-        <br></br>
-        <input type="text" name="nomeTreinador"></input>
-        <br></br>
+        <br />
+        <input type="text" name="nomeTreinador" />
+        <br />
         <label htmlFor="idadeTreinador">Idade Treinador</label>
-        <br></br>
-        <input type="number" name="idadeTreinador"></input>
-        <br></br>
+        <br />
+        <input type="number" name="idadeTreinador" />
+        <br />
         <label htmlFor="pontos">Pontos</label>
-        <br></br>
-        <input type="number" name="pontos"></input>
-        <br></br>
-        <input type="submit" value="Submit"></input>
+        <br />
+        <input type="number" name="pontos" />
+        <br />
+        <input type="submit" value="Submit" />
       </form>
     </div>
   );

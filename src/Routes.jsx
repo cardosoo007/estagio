@@ -15,10 +15,13 @@ import Admin from './admin/Admin';
 import AdminJogador from './admin/AddJogador';
 import Layout from './Layout.jsx';
 
+// Roteador principal da aplicação.
+// Define as rotas e qual componente renderiza para cada caminho.
 const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
+        {/* O layout comum é renderizado para todas as rotas filhas */}
         <Route element={<Layout />}>
           <Route element={<Calendario />} path="/calendario" />
           <Route element={<Equipas />} path="/equipas" />
