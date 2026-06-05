@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import './Jogadores.css';
 
 function Jogadores() {
-  // guarda a lista de jogadores obtida da API
+  // Estado para guardar a lista de jogadores recebida do backend.
   const [listaJogadores, setListaJogadores] = useState([]);
 
-  // carrega os jogadores apenas uma vez quando o componente é montado
+  // Busca os jogadores assim que o componente é montado.
   useEffect(() => {
     fetch('/api/jogadores')
       .then(response => response.json())
@@ -15,12 +15,11 @@ function Jogadores() {
       });
   }, []);
 
-  console.log(listaJogadores);
-
   return (
     <div>
       <h1>Jogadores</h1>
 
+      {/* Lista de jogadores com link para a página de detalhe de cada um */}
       <ul>
         {listaJogadores.map(jogador => (
           <li className="jogador-estilo" key={jogador.id}>
