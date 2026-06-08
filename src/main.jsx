@@ -13,6 +13,8 @@ createRoot(document.getElementById('root')).render(
       authorizationParams={{
         redirect_uri: window.location.origin,
       }}
+      useRefreshTokens
+      cacheLocation="localstorage"
     >
       <Provider>
         <Routes />
