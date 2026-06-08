@@ -14,6 +14,7 @@ import Jogadores from './Jogadores.jsx';
 import Admin from './admin/Admin';
 import AdminJogador from './admin/AddJogador';
 import Layout from './Layout.jsx';
+import Login from './Login.jsx';
 
 // Roteador principal da aplicação.
 // Define as rotas e qual componente renderiza para cada caminho.
@@ -34,6 +35,7 @@ const AppRouter = () => {
           <Route element={<Admin />} path="/admin" />
           <Route element={<AdminJogador />} path="/admin/adjogador" />
           <Route element={<Jogador />} path="/jogadores/:id" />
+          <Route element={<Login />} path="/login" />
           <Route element={<App />} path="/" />
         </Route>
       </Routes>
