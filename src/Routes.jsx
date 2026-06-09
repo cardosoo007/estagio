@@ -10,6 +10,7 @@ import Marcadores from './Marcadores';
 import Configuracoes from './Configuracoes';
 import Jogador from './Jogador';
 import Equipa from './Equipa';
+import Liga from './Liga';
 import Jogadores from './Jogadores.jsx';
 import Admin from './admin/Admin';
 import AdminJogador from './admin/AddJogador';
@@ -34,6 +35,7 @@ const AppRouter = () => {
           <Route element={<Admin />} path="/admin" />
           <Route element={<AdminJogador />} path="/admin/adjogador" />
           <Route element={<Jogador />} path="/jogadores/:id" />
+          <Route element={<Liga />} path="/ligas/:codigo" />
           <Route element={<App />} path="/" />
         </Route>
       </Routes>
