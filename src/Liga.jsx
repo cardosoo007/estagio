@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './Liga.css';
-import { TabelaClassificacoes } from './Classificacoes';
+import TabelaClassificacoes from './TabelaClassificacoes';
 
 // Liga selecionada e nomes disponíveis para a pesquisa.
 const ligas = [
