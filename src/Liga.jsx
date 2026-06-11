@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import './Classificacoes.css';
+import './Liga.css';
 
 // Liga selecionada e nomes disponíveis para a pesquisa.
 const ligas = [
