@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import './Classificacoes.css';
+import { useParams } from 'react-router-dom';
 import './Liga.css';
+import { TabelaClassificacoes } from './Classificacoes';
 
 // Liga selecionada e nomes disponíveis para a pesquisa.
 const ligas = [
@@ -33,40 +33,7 @@ function Liga() {
         <h1>{liga?.nome}</h1>
       </div>
 
-      <table className="tabela-classificacoes">
-        <thead>
-          <tr>
-            <th>Posição</th>
-            <th>Equipa</th>
-            <th>Vitórias</th>
-            <th>Empates</th>
-            <th>Derrotas</th>
-            <th>GM</th>
-            <th>GS</th>
-            <th>DG</th>
-            <th>Pontos</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {classificacoes.map(classificacao => (
-            <tr key={classificacao.posicao}>
-              <td>{classificacao.posicao}</td>
-              <td className="equipa-com-logotipo">
-                <img src={classificacao.logotipo} alt={classificacao.equipa} width="16" height="16" />
-                <Link to={`/equipas/${classificacao.equipaIdApi}`}>{classificacao.equipa}</Link>
-              </td>
-              <td>{classificacao.vitorias}</td>
-              <td>{classificacao.empates}</td>
-              <td>{classificacao.derrotas}</td>
-              <td>{classificacao.golos.marcados}</td>
-              <td>{classificacao.golos.sofridos}</td>
-              <td>{classificacao.golos.marcados - classificacao.golos.sofridos}</td>
-              <td>{classificacao.pontos}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <TabelaClassificacoes classificacoesOrdenadas={classificacoes} />
     </div>
   );
 }
