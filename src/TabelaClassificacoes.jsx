@@ -1,6 +1,42 @@
 import { Link } from 'react-router-dom';
+import { Icon, IconButton } from '@chakra-ui/react';
+import { HiHeart } from 'react-icons/hi';
+import { useEffect, useState } from 'react';
 
 function TabelaClassificacoes({ classificacoesOrdenadas, ordenarPor = () => {} }) {
+  const [equipasFavoritas, setEquipasFavoritas] = useState([]);
+
+  useEffect(() => {
+    fetch('/api/favoritos')
+      .then(response => response.json())
+      .then(data => {
+        setEquipasFavoritas(data);
+      });
+  }, []);
+
+  function alternarFavorito(classificacao) {
+    const novoFavorito = {
+      equipaIdApi: classificacao.equipaIdApi,
+      equipa: classificacao.equipa,
+      logotipo: classificacao.logotipo,
+    };
+
+    console.log(novoFavorito);
+
+    fetch('/api/favoritos', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ novoFavorito }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        setEquipasFavoritas(data);
+      });
+  }
+
   return (
     <table className="tabela-classificacoes">
       <thead>
@@ -27,24 +63,38 @@ function TabelaClassificacoes({ classificacoesOrdenadas, ordenarPor = () => {} }
 
       <tbody>
         {/* Usamos classificacoesOrdenadas, e não classificacoes, para a tabela aparecer na ordem escolhida. */}
-        {classificacoesOrdenadas.map(classificacao => (
-          <tr key={classificacao.posicao}>
-            <td>{classificacao.posicao}</td>
-            {/* Mostra o logotipo da equipa e um link para a página de detalhe da equipa */}
-            <td className="equipa-com-logotipo">
-              <img src={classificacao.logotipo} alt={classificacao.equipa} width="16" height="16" />
-              {/* equipaIdApi é o ID da equipa na football-data. Ele é usado no URL para depois pedir os detalhes dessa equipa. */}
-              <Link to={`/equipas/${classificacao.equipaIdApi}`}>{classificacao.equipa}</Link>
-            </td>
-            <td>{classificacao.vitorias}</td>
-            <td>{classificacao.empates}</td>
-            <td>{classificacao.derrotas}</td>
-            <td>{classificacao.golos.marcados}</td>
-            <td>{classificacao.golos.sofridos}</td>
-            <td>{classificacao.golos.marcados - classificacao.golos.sofridos}</td>
-            <td>{classificacao.pontos}</td>
-          </tr>
-        ))}
+        {classificacoesOrdenadas.map(classificacao => {
+          const equipaEstaFavorita = equipasFavoritas.some(favorito => {
+            return favorito.equipaIdApi === classificacao.equipaIdApi;
+          });
+
+          return (
+            <tr key={classificacao.posicao}>
+              <td>{classificacao.posicao}</td>
+              {/* Mostra o logotipo da equipa, um link para a página de detalhe e o botão de favorito. */}
+              <td className="equipa-com-logotipo">
+                <IconButton variant="ghost" aria-label="Adicionar aos favoritos" size="xs" onClick={() => alternarFavorito(classificacao)}>
+                  <Icon color={equipaEstaFavorita ? 'red.500' : 'gray.400'}>
+                    <HiHeart />
+                  </Icon>
+                </IconButton>
+
+                <img src={classificacao.logotipo} alt={classificacao.equipa} width="16" height="16" />
+
+                {/* equipaIdApi é o ID da equipa na football-data. Ele é usado no URL para depois pedir os detalhes dessa equipa. */}
+                <Link to={`/equipas/${classificacao.equipaIdApi}`}>{classificacao.equipa}</Link>
+              </td>
+
+              <td>{classificacao.vitorias}</td>
+              <td>{classificacao.empates}</td>
+              <td>{classificacao.derrotas}</td>
+              <td>{classificacao.golos.marcados}</td>
+              <td>{classificacao.golos.sofridos}</td>
+              <td>{classificacao.golos.marcados - classificacao.golos.sofridos}</td>
+              <td>{classificacao.pontos}</td>
+            </tr>
+          );
+        })}
       </tbody>
     </table>
   );
