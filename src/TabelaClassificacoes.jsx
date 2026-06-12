@@ -2,20 +2,30 @@ import { Link } from 'react-router-dom';
 import { Icon, IconButton } from '@chakra-ui/react';
 import { HiHeart } from 'react-icons/hi';
 import { useEffect, useState } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 
 function TabelaClassificacoes({ classificacoesOrdenadas, ordenarPor = () => {} }) {
   const [equipasFavoritas, setEquipasFavoritas] = useState([]);
+  const { user, isAuthenticated } = useAuth0();
 
   useEffect(() => {
-    fetch('/api/favoritos')
+    if (!isAuthenticated) {
+      return;
+    }
+
+    fetch(`/api/favoritos?userId=${user.sub}`)
       .then(response => response.json())
       .then(data => {
         setEquipasFavoritas(data);
       });
-  }, []);
+  }, [isAuthenticated, user]);
 
   function alternarFavorito(classificacao) {
+    if (!isAuthenticated) {
+      return;
+    }
     const novoFavorito = {
+      userId: user.sub,
       equipaIdApi: classificacao.equipaIdApi,
       equipa: classificacao.equipa,
       logotipo: classificacao.logotipo,
