@@ -1,0 +1,10 @@
+.cabecalho-liga {
+  display: flex;
+  gap: 12px;
+  margin: 24px;
+}
+
+.cabecalho-liga img {
+  width: 50px;
+  height: auto;
+}
