@@ -28,7 +28,6 @@ function TabelaClassificacoes({ classificacoesOrdenadas, ordenarPor = () => {} }
       userId: user.sub,
       equipaIdApi: classificacao.equipaIdApi,
       equipa: classificacao.equipa,
-      logotipo: classificacao.logotipo,
     };
 
     console.log(novoFavorito);
@@ -40,11 +39,13 @@ function TabelaClassificacoes({ classificacoesOrdenadas, ordenarPor = () => {} }
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ novoFavorito }),
-    })
-      .then(response => response.json())
-      .then(data => {
-        setEquipasFavoritas(data);
-      });
+    }).then(() => {
+      fetch(`/api/favoritos?userId=${user.sub}`)
+        .then(response => response.json())
+        .then(data => {
+          setEquipasFavoritas(data);
+        });
+    });
   }
 
   return (
