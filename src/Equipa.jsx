@@ -11,10 +11,6 @@ function Equipa() {
   // Começa como objeto vazio porque ainda não recebemos a resposta da API.
   const [equipa, setEquipa] = useState({});
 
-  // Este estado já não é necessário para a nova lógica, porque os jogadores vêm dentro de equipa.squad.
-  // Pode ser removido quando quiseres limpar o ficheiro.
-  const [jogadores, setJogadores] = useState([]);
-
   // Busca os detalhes da equipa quando o id da rota mudar.
   useEffect(() => {
     // Se por algum motivo o id ainda não existir, não fazemos o pedido.
