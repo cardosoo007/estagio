@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import './Classificacoes.css';
 import { NativeSelect } from '@chakra-ui/react';
+
 import TabelaClassificacoes from './TabelaClassificacoes';
+import './Classificacoes.css';
 
 // Liga selecionada e nomes disponíveis para o filtro.
 const ligas = [
