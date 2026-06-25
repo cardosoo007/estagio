@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { NativeSelect } from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
 
 import TabelaClassificacoes from './TabelaClassificacoes';
 import './Classificacoes.css';
@@ -17,6 +18,8 @@ const ligas = [
 function Classificacoes() {
   // Estado onde guardamos a lista de classificações retornada pela API.
   const [classificacoes, setClassificacoes] = useState([]);
+
+  const { t } = useTranslation();
   // Estado da liga selecionada no menu drop-down.
   const [ligaSelecionada, setLigaSelecionada] = useState('PPL');
   // Estado usado para saber qual coluna está ordenada e em que direção.
@@ -88,7 +91,7 @@ function Classificacoes() {
 
   return (
     <div>
-      <h1>Classificações</h1>
+      <h1>{t('classificacoes')}</h1>
 
       <div className="dropdown">
         {/* Seletor de liga para filtrar as classificações */}

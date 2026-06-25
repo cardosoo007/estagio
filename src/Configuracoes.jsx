@@ -1,11 +1,13 @@
-import { Box, Button, Heading, HStack, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, Heading, HStack, Text } from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
 
-// Página de configurações da aplicação.
 function Configuracoes() {
+  const { t } = useTranslation();
+
   return (
     <Box>
-      <Heading>Configurações</Heading>
-      <Text>Aqui é onde podes mostrar opções e ajustes do site.</Text>
+      <Heading>{t('configuracoes')}</Heading>
+      <Text>{t('textoConfiguracoes')}</Text>
       <HStack>
         <Button>Click me</Button>
         <Button>Click me</Button>

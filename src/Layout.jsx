@@ -1,9 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { Outlet } from 'react-router';
-import { Avatar, Combobox, Portal, Text, useFilter, useListCollection } from '@chakra-ui/react';
+import { Avatar, Button, Combobox, Portal, Text, useFilter, useListCollection } from '@chakra-ui/react';
 import { useAuth0 } from '@auth0/auth0-react';
 import LoginButton from './LoginButton';
 import LogoutButton from './LogoutButton';
+import { useTranslation } from 'react-i18next';
 
 const ligas = [
   { codigo: 'PPL', nome: 'Primeira Liga' },
@@ -18,7 +19,7 @@ const ligas = [
 function Layout() {
   const { isAuthenticated, user } = useAuth0();
   const navigate = useNavigate();
-
+  const { t, i18n } = useTranslation();
   const { contains } = useFilter({ sensitivity: 'base' });
 
   const { collection, filter } = useListCollection({
@@ -40,15 +41,15 @@ function Layout() {
     <div>
       <nav className="navbar">
         {/* Navegação principal do site */}
-        <Link to="/">Página Principal</Link>
-        <Link to="/calendario">Calendário</Link>
-        <Link to="/classificacoes">Classificações</Link>
-        <Link to="/equipas">Equipas</Link>
-        <Link to="/configuracoes">Configurações</Link>
+        <Link to="/">{t('paginaPrincipal')}</Link>
+        <Link to="/calendario">{t('calendario')}</Link>
+        <Link to="/classificacoes">{t('classificacoes')}</Link>
+        <Link to="/equipas">{t('equipas')}</Link>
+        <Link to="/configuracoes">{t('configuracoes')}</Link>
 
         <Combobox.Root collection={collection} width="180px" onInputValueChange={event => filter(event.inputValue)} onValueChange={escolherLiga}>
           <Combobox.Control>
-            <Combobox.Input placeholder="Pesquisar liga" />
+            <Combobox.Input placeholder={t('pesquisarLiga')} />
             <Combobox.IndicatorGroup>
               <Combobox.ClearTrigger />
               <Combobox.Trigger />
@@ -88,7 +89,17 @@ function Layout() {
       </nav>
       {/* Aqui o componente da rota atual é renderizado */}
       <Outlet />
-      <footer className="footer">Construido por Rodrigo Cardoso</footer>
+      <footer className="footer">
+        {t('construidoPor')}
+
+        <Button size="sm" variant="ghost" onClick={() => i18n.changeLanguage('pt')}>
+          🇵🇹
+        </Button>
+
+        <Button size="sm" variant="ghost" onClick={() => i18n.changeLanguage('en')}>
+          🇬🇧
+        </Button>
+      </footer>
     </div>
   );
 }
