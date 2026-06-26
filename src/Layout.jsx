@@ -5,6 +5,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import LoginButton from './LoginButton';
 import LogoutButton from './LogoutButton';
 import { useTranslation } from 'react-i18next';
+import './Layout.css';
 
 const ligas = [
   { codigo: 'PPL', nome: 'Primeira Liga' },
@@ -90,15 +91,17 @@ function Layout() {
       {/* Aqui o componente da rota atual é renderizado */}
       <Outlet />
       <footer className="footer">
+        <div>
+          <Button size="sm" variant="ghost" onClick={() => i18n.changeLanguage('pt')}>
+            🇵🇹
+          </Button>
+
+          <Button size="sm" variant="ghost" onClick={() => i18n.changeLanguage('en')}>
+            🇬🇧
+          </Button>
+        </div>
+
         {t('construidoPor')}
-
-        <Button size="sm" variant="ghost" onClick={() => i18n.changeLanguage('pt')}>
-          🇵🇹
-        </Button>
-
-        <Button size="sm" variant="ghost" onClick={() => i18n.changeLanguage('en')}>
-          🇬🇧
-        </Button>
       </footer>
     </div>
   );
