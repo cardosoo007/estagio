@@ -6,24 +6,35 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 function TabelaClassificacoes({ classificacoesOrdenadas, ordenarPor = () => {} }) {
   const [equipasFavoritas, setEquipasFavoritas] = useState([]);
-  const { user, isAuthenticated } = useAuth0();
+  const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
 
   useEffect(() => {
     if (!isAuthenticated) {
       return;
     }
 
-    fetch(`/api/favoritos?userId=${user.sub}`)
-      .then(response => response.json())
-      .then(data => {
-        setEquipasFavoritas(data);
-      });
-  }, [isAuthenticated, user]);
+    async function carregarFavoritos() {
+      const token = await getAccessTokenSilently();
 
-  function alternarFavorito(classificacao) {
+      fetch(`/api/favoritos?userId=${user.sub}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then(response => response.json())
+        .then(data => {
+          setEquipasFavoritas(data);
+        });
+    }
+
+    carregarFavoritos();
+  }, [isAuthenticated, user, getAccessTokenSilently]);
+
+  async function alternarFavorito(classificacao) {
     if (!isAuthenticated) {
       return;
     }
+    const token = await getAccessTokenSilently();
     const novoFavorito = {
       userId: user.sub,
       equipaIdApi: classificacao.equipaIdApi,
@@ -37,10 +48,15 @@ function TabelaClassificacoes({ classificacoesOrdenadas, ordenarPor = () => {} }
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ novoFavorito }),
     }).then(() => {
-      fetch(`/api/favoritos?userId=${user.sub}`)
+      fetch(`/api/favoritos?userId=${user.sub}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
         .then(response => response.json())
         .then(data => {
           setEquipasFavoritas(data);
