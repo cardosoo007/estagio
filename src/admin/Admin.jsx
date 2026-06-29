@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { withAuthenticationRequired } from '@auth0/auth0-react';
 
 // Página de administração para criar novas equipas.
 function Admin() {
@@ -61,4 +62,6 @@ function Admin() {
   );
 }
 
-export default Admin;
+export default withAuthenticationRequired(Admin, {
+  onRedirecting: () => <div>Redirecting you to the login page...</div>,
+});
