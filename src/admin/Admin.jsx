@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 
-const ADMIN_EMAILS = ['rodrigoferreiracardoso12@gmail.com'];
+const ADMIN_EMAILS = import.meta.env.VITE_ADMIN_EMAILS.split(',');
 // Página de administração para criar novas equipas.
 function Admin() {
   const { user } = useAuth0();
