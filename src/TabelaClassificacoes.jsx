@@ -2,11 +2,13 @@ import { Link } from 'react-router-dom';
 import { Icon, IconButton } from '@chakra-ui/react';
 import { HiHeart } from 'react-icons/hi';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAuth0 } from '@auth0/auth0-react';
 
 function TabelaClassificacoes({ classificacoesOrdenadas, ordenarPor = () => {} }) {
   const [equipasFavoritas, setEquipasFavoritas] = useState([]);
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -68,11 +70,11 @@ function TabelaClassificacoes({ classificacoesOrdenadas, ordenarPor = () => {} }
     <table className="tabela-classificacoes">
       <thead>
         <tr>
-          <th>Posição</th>
-          <th>Equipa</th>
-          <th>Vitórias</th>
-          <th>Empates</th>
-          <th>Derrotas</th>
+          <th>{t('posicao')}</th>
+          <th>{t('equipas')}</th>
+          <th>{t('vitorias')}</th>
+          <th>{t('empates')}</th>
+          <th>{t('derrotas')}</th>
           {/* GM significa Golos Marcados. Ao clicar, chamamos ordenarPor("marcados"). */}
           <th className="clicavel" onClick={() => ordenarPor('marcados')}>
             GM
@@ -83,7 +85,7 @@ function TabelaClassificacoes({ classificacoesOrdenadas, ordenarPor = () => {} }
           </th>
           <th>DG</th>
           <th className="clicavel" onClick={() => ordenarPor('pontos')}>
-            Pontos
+            {t('pontos')}
           </th>
         </tr>
       </thead>

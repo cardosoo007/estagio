@@ -1,12 +1,13 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { Button } from '@chakra-ui/react';
 import { Tooltip } from './components/ui/tooltip';
+import { useTranslation } from 'react-i18next';
 
 const LogoutButton = () => {
   const { logout } = useAuth0();
-
+  const { t } = useTranslation();
   return (
-    <Tooltip content="Terminar sessão">
+    <Tooltip content={t('terminarSessao')}>
       <Button
         colorPalette="red"
         onClick={() =>
@@ -18,7 +19,7 @@ const LogoutButton = () => {
         }
         className="button logout"
       >
-        Log Out
+        {t('sair')}
       </Button>
     </Tooltip>
   );
