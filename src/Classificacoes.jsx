@@ -1,7 +1,9 @@
-import TabelaClassificacoes from './TabelaClassificacoes';
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { NativeSelect } from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
+import { useQuery } from '@tanstack/react-query';
+
+import TabelaClassificacoes from './TabelaClassificacoes';
 import './Classificacoes.css';
 
 // Liga selecionada e nomes disponíveis para o filtro.
@@ -15,6 +17,7 @@ const ligas = [
 ];
 
 function Classificacoes() {
+  const { t } = useTranslation();
   // Estado da liga selecionada no menu drop-down.
   const [ligaSelecionada, setLigaSelecionada] = useState('PPL');
   // Estado usado para saber qual coluna está ordenada e em que direção.
@@ -33,7 +36,6 @@ function Classificacoes() {
   } = useQuery({
     queryKey: ['classificacoes', ligaSelecionada],
     queryFn: async () => {
-      console.log(' backend:', ligaSelecionada);
       const response = await fetch(`/api/classificacoes?liga=${ligaSelecionada}`);
       return response.json();
     },
@@ -96,7 +98,7 @@ function Classificacoes() {
 
   return (
     <div>
-      <h1>Classificações</h1>
+      <h1>{t('classificacoes')}</h1>
 
       <div className="dropdown">
         {/* Seletor de liga para filtrar as classificações */}

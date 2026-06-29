@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Equipas.css';
-
+import { useTranslation } from 'react-i18next';
 // Página que mostra a lista de equipas com paginação.
 function Equipas() {
   const [listaEquipas, setListaEquipas] = useState([]);
   const [paginaAtual, setPaginaAtual] = useState(0);
   const [totalPaginas, setTotalPaginas] = useState(1);
-
+  const { t } = useTranslation();
   // Busca as equipas a cada mudança de página.
   useEffect(() => {
     fetch(`/api/equipas?pagina=${paginaAtual}&items=5`)
@@ -20,7 +20,7 @@ function Equipas() {
 
   return (
     <div>
-      <h1>Equipas</h1>
+      <h1>{t('equipas')}</h1>
       <ul>
         {listaEquipas.map(equipa => (
           <li className="equipa-estilo" key={equipa.id}>
@@ -32,15 +32,15 @@ function Equipas() {
 
       {/* Controles de navegação entre páginas */}
       <button onClick={() => setPaginaAtual(paginaAtual - 1)} disabled={paginaAtual === 0}>
-        Anterior
+        {t('anterior')}
       </button>
 
       <span>
-        Página {paginaAtual + 1} de {totalPaginas}
+        {t('pagina')} {paginaAtual + 1} {t('de')} {totalPaginas}
       </span>
 
       <button onClick={() => setPaginaAtual(paginaAtual + 1)} disabled={paginaAtual === totalPaginas - 1}>
-        Próxima
+        {t('proxima')}
       </button>
     </div>
   );

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 // Página de detalhe de uma equipa específica.
 function Equipa() {
@@ -7,6 +8,7 @@ function Equipa() {
   // Exemplo: se o URL for /equipas/503, então id fica com o valor "503".
   const { id } = useParams();
 
+  const { t } = useTranslation();
   // Guarda os dados da equipa que vêm do backend.
   // Começa como objeto vazio porque ainda não recebemos a resposta da API.
   const [equipa, setEquipa] = useState({});
@@ -31,28 +33,37 @@ function Equipa() {
 
   return (
     <div>
-      <h1>Detalhes da Equipa</h1>
-
-      {/* Mostra os dados básicos da equipa */}
-      {/* crest, name, shortName, coach, venue e founded são campos que vêm da football-data. */}
-      <img src={equipa.crest} alt={equipa.name} width="100" />
-      <br />
-      <p>Nome: {equipa.name}</p>
-      <p>Nome curto: {equipa.shortName}</p>
-      {/* O ?. evita erro se coach ainda não existir ou vier vazio na resposta. */}
-      <p>Treinador: {equipa.coach?.name}</p>
-      <p>Estádio: {equipa.venue}</p>
-      <p>Fundação: {equipa.founded}</p>
-      <br />
-      <h2>Jogadores</h2>
+      <h1>{t('detalhesEquipa')}</h1>
+      <p>
+        {t('nome')}: {equipa.name}
+      </p>
+      <p>
+        {t('nomeCurto')}: {equipa.shortName}
+      </p>
+      <p>
+        {t('treinador')}: {equipa.coach?.name}
+      </p>
+      <p>
+        {t('estadio')}: {equipa.venue}
+      </p>
+      <p>
+        {t('fundacao')}: {equipa.founded}
+      </p>
+      <h2>{t('jogadores')}</h2>
       {/* squad é a lista de jogadores que vem dentro da resposta da equipa na football-data. */}
       {/* O ?. evita erro enquanto equipa.squad ainda não existe, antes da resposta chegar. */}
       {equipa.squad?.map(jogador => (
         <div key={jogador.id}>
           {/* Cada jogador também vem da football-data, por isso usamos name, position e nationality. */}
-          <p>Nome: {jogador.name}</p>
-          <p>Posição: {jogador.position}</p>
-          <p>Nacionalidade: {jogador.nationality}</p>
+          <p>
+            {t('nome')}: {jogador.name}
+          </p>
+          <p>
+            {t('posicao')}: {jogador.position}
+          </p>
+          <p>
+            {t('nacionalidade')}: {jogador.nationality}
+          </p>
           <br />
         </div>
       ))}

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Box, DatePicker, Heading, NativeSelect, Text } from '@chakra-ui/react';
 import { parseDate } from '@internationalized/date';
+import { useTranslation } from 'react-i18next';
 
 const ligas = [
   { codigo: 'PPL', nome: 'Primeira Liga' },
@@ -12,6 +13,7 @@ const ligas = [
 ];
 
 function Calendario() {
+  const { t } = useTranslation();
   const [jogos, setJogos] = useState([]);
   const [ligaSelecionada, setLigaSelecionada] = useState('PPL');
   const [dataEscolhida, setDataEscolhida] = useState('');
@@ -35,7 +37,7 @@ function Calendario() {
   return (
     <Box p="5">
       <Heading size="lg" mb="4">
-        Calendário de Jogos
+        {t('calendario')}
       </Heading>
 
       <Box mb="5" maxW="360px">
