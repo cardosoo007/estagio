@@ -3,6 +3,9 @@ import { NativeSelect } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 
 import TabelaClassificacoes from './TabelaClassificacoes';
+import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { NativeSelect } from '@chakra-ui/react';
 import './Classificacoes.css';
 
 // Liga selecionada e nomes disponíveis para o filtro.
@@ -31,17 +34,19 @@ function Classificacoes() {
     direcao: 'desc',
   });
 
-  // Buscamos as classificações sempre que a liga selecionada mudar.
-  // O frontend chama /api/classificacoes, mas o Vite encaminha esse pedido para o backend.
-  // O parâmetro ligaSelecionada diz ao backend qual competição deve pedir à API externa.
-  useEffect(() => {
-    fetch(`/api/classificacoes?liga=${ligaSelecionada}`)
-      .then(response => response.json())
-      .then(data => {
-        // Guardamos a resposta no estado para depois desenhar as linhas da tabela.
-        setClassificacoes(data);
-      });
-  }, [ligaSelecionada]);
+  const {
+    data: classificacoes = [],
+    isPending,
+    error,
+  } = useQuery({
+    queryKey: ['classificacoes', ligaSelecionada],
+    queryFn: async () => {
+      console.log(' backend:', ligaSelecionada);
+      const response = await fetch(`/api/classificacoes?liga=${ligaSelecionada}`);
+      return response.json();
+    },
+    staleTime: 1000 * 60 * 5,
+  });
 
   // Função chamada quando o utilizador clica nos cabeçalhos GM ou GS.
   // O parâmetro campo recebe o nome da propriedade que queremos ordenar dentro de golos.
@@ -88,6 +93,14 @@ function Classificacoes() {
     // valorB - valorA coloca números maiores antes; valorA - valorB coloca números menores antes.
     return ordenacao.direcao === 'desc' ? valorB - valorA : valorA - valorB;
   });
+
+  if (isPending) {
+    return <p>A carregar classificações...</p>;
+  }
+
+  if (error) {
+    return <p>Erro ao carregar classificações.</p>;
+  }
 
   return (
     <div>
