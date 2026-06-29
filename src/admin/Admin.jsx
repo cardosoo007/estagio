@@ -1,8 +1,16 @@
 import { useEffect, useState } from 'react';
-import { withAuthenticationRequired } from '@auth0/auth0-react';
+import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 
+const ADMIN_EMAILS = ['rodrigoferreiracardoso12@gmail.com'];
 // Página de administração para criar novas equipas.
 function Admin() {
+  const { user } = useAuth0();
+
+  const isAdmin = ADMIN_EMAILS.includes(user?.email);
+
+  if (!isAdmin) {
+    return <p>Não tens permissão para aceder a esta página.</p>;
+  }
   // Estado usado para guardar os dados de equipas retornados pela API.
   const [adicionarEquipa, setAdicionarEquipa] = useState({});
 
