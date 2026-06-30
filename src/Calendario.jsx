@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Box, DatePicker, Heading, NativeSelect, Text } from '@chakra-ui/react';
+import { Badge, Box, Card, DatePicker, Heading, NativeSelect, Text } from '@chakra-ui/react';
 import { parseDate } from '@internationalized/date';
 import { useTranslation } from 'react-i18next';
 
@@ -26,8 +26,6 @@ function Calendario() {
 
         if (data.length > 0) {
           setDataEscolhida(data[0].data);
-        } else {
-          setDataEscolhida('');
         }
       });
   }, [ligaSelecionada]);
@@ -35,67 +33,68 @@ function Calendario() {
   const jogosDoDia = jogos.filter(jogo => jogo.data === dataEscolhida);
 
   return (
-    <Box p="5">
-      <Heading size="lg" mb="4">
-        {t('calendario')}
-      </Heading>
+    <Box>
+      <Heading>{t('calendario')}</Heading>
 
-      <Box mb="5" maxW="360px">
-        <NativeSelect.Root>
-          <NativeSelect.Field value={ligaSelecionada} onChange={event => setLigaSelecionada(event.target.value)}>
-            {ligas.map(liga => (
-              <option value={liga.codigo} key={liga.codigo}>
-                {liga.nome}
-              </option>
-            ))}
-          </NativeSelect.Field>
-          <NativeSelect.Indicator />
-        </NativeSelect.Root>
-      </Box>
+      <NativeSelect.Root>
+        <NativeSelect.Field value={ligaSelecionada} onChange={event => setLigaSelecionada(event.target.value)}>
+          {ligas.map(liga => (
+            <option value={liga.codigo} key={liga.codigo}>
+              {liga.nome}
+            </option>
+          ))}
+        </NativeSelect.Field>
+        <NativeSelect.Indicator />
+      </NativeSelect.Root>
 
-      <Box maxW="360px">
-        <DatePicker.Root
-          inline
-          size="sm"
-          value={dataEscolhida ? [parseDate(dataEscolhida)] : []}
-          onValueChange={event => {
-            setDataEscolhida(event.valueAsString[0]);
-          }}
-        >
-          <DatePicker.View view="day">
-            <DatePicker.Header />
-            <DatePicker.DayTable />
-          </DatePicker.View>
+      <DatePicker.Root
+        inline
+        value={dataEscolhida ? [parseDate(dataEscolhida)] : []}
+        onValueChange={event => {
+          const data = event.value[0];
 
-          <DatePicker.View view="month">
-            <DatePicker.Header />
-            <DatePicker.MonthTable />
-          </DatePicker.View>
+          if (data) {
+            setDataEscolhida(data.toString());
+          }
+        }}
+      >
+        <DatePicker.View view="day">
+          <DatePicker.Header />
+          <DatePicker.DayTable />
+        </DatePicker.View>
 
-          <DatePicker.View view="year">
-            <DatePicker.Header />
-            <DatePicker.YearTable />
-          </DatePicker.View>
-        </DatePicker.Root>
-      </Box>
+        <DatePicker.View view="month">
+          <DatePicker.Header />
+          <DatePicker.MonthTable />
+        </DatePicker.View>
 
-      <Box mt="5">
-        <Heading size="md" mb="3">
-          Jogos do dia
-        </Heading>
+        <DatePicker.View view="year">
+          <DatePicker.Header />
+          <DatePicker.YearTable />
+        </DatePicker.View>
+      </DatePicker.Root>
 
-        {jogosDoDia.length === 0 && <Text>Não existem jogos neste dia.</Text>}
+      <Heading>Jogos do dia</Heading>
 
-        {jogosDoDia.map(jogo => (
-          <Box key={jogo.id} borderWidth="1px" p="3" borderRadius="md" mb="2">
-            <Text fontWeight="bold">
+      {jogosDoDia.length === 0 && <Text>Não existem jogos neste dia.</Text>}
+
+      {jogosDoDia.map(jogo => (
+        <Card.Root key={jogo.id}>
+          <Card.Body>
+            <Text>
               {jogo.casa} vs {jogo.fora}
             </Text>
 
-            <Text>{jogo.hora}</Text>
-          </Box>
-        ))}
-      </Box>
+            {jogo.resultadoCasa !== null && jogo.resultadoFora !== null && (
+              <Text>
+                Resultado: {jogo.resultadoCasa} - {jogo.resultadoFora}
+              </Text>
+            )}
+
+            <Badge>{jogo.hora}</Badge>
+          </Card.Body>
+        </Card.Root>
+      ))}
     </Box>
   );
 }
