@@ -1,9 +1,11 @@
-// Página de calendário: mostra as datas e eventos do campeonato.
+import { useTranslation } from 'react-i18next';
+
 function Calendario() {
+  const { t } = useTranslation();
   return (
     <div>
-      <h1>Calendário</h1>
-      <p>Vê as datas</p>
+      <h1>{t('calendario')}</h1>
+      <p>{t('verDatas')}</p>
     </div>
   );
 }
