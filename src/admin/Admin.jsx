@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
+import { Navigate } from 'react-router-dom';
 
 // Página de administração para criar novas equipas.
 function Admin() {
@@ -62,9 +63,8 @@ function Admin() {
   }
 
   if (!isAdmin) {
-    return <p>Não tens permissão para aceder a esta página.</p>;
+    return <Navigate to="/" replace />;
   }
-
   return (
     <div>
       <h1>Admin</h1>
