@@ -19,6 +19,7 @@ createRoot(document.getElementById('root')).render(
         authorizationParams={{
           redirect_uri: window.location.origin,
           audience: import.meta.env.VITE_AUTH0_AUDIENCE,
+          scope: 'openid profile email admin:access',
         }}
         useRefreshTokens
         cacheLocation="localstorage"
@@ -27,7 +28,7 @@ createRoot(document.getElementById('root')).render(
           <Routes />
         </Provider>
       </Auth0Provider>
-      <ReactQueryDevtools initialIsOpen={false} />
+      <ReactQueryDevtools initialIsOpen={true} />
     </QueryClientProvider>
   </StrictMode>,
 );
