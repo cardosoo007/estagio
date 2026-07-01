@@ -1,9 +1,33 @@
 import { useEffect, useState } from 'react';
+import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
+import { Navigate } from 'react-router-dom';
 
 // Página de administração para criar novas equipas.
 function Admin() {
+  const { getAccessTokenSilently } = useAuth0();
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [aCarregar, setACarregar] = useState(true);
   // Estado usado para guardar os dados de equipas retornados pela API.
   const [adicionarEquipa, setAdicionarEquipa] = useState({});
+
+  useEffect(() => {
+    getAccessTokenSilently()
+      .then(token =>
+        fetch('/api/admin/verificar', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }),
+      )
+      .then(response => {
+        setIsAdmin(response.ok);
+        setACarregar(false);
+      })
+      .catch(() => {
+        setIsAdmin(false);
+        setACarregar(false);
+      });
+  }, [getAccessTokenSilently]);
 
   // Busca os dados de equipas quando o componente é montado.
   useEffect(() => {
@@ -13,7 +37,7 @@ function Admin() {
   }, []);
 
   // Ao submeter o formulário, envia os dados para o backend.
-  function search(formData) {
+  async function search(formData) {
     const nomeTreinador = formData.get('nomeTreinador');
     const nomeEquipa = formData.get('nomeEquipa');
     const idadeTreinador = formData.get('idadeTreinador');
@@ -22,10 +46,11 @@ function Admin() {
     const novaEquipa = { nomeTreinador, nomeEquipa, idadeTreinador, pontos };
 
     console.log(novaEquipa);
-
+    const token = await getAccessTokenSilently();
     fetch('/api/equipas', {
       method: 'POST',
       headers: {
+        Authorization: `Bearer ${token}`,
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
@@ -33,6 +58,13 @@ function Admin() {
     });
   }
 
+  if (aCarregar) {
+    return <p>A verificar permissões...</p>;
+  }
+
+  if (!isAdmin) {
+    return <Navigate to="/" replace />;
+  }
   return (
     <div>
       <h1>Admin</h1>
@@ -61,4 +93,6 @@ function Admin() {
   );
 }
 
-export default Admin;
+export default withAuthenticationRequired(Admin, {
+  onRedirecting: () => <div>Redirecting you to the login page...</div>,
+});
