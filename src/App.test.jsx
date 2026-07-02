@@ -31,6 +31,27 @@ test('vai da homepage para o calendário pela navbar', () => {
 
   expect(window.location.pathname).toBe('/calendario');
 });
+
+test('volta para a homepage pela navbar', () => {
+  window.history.pushState({}, '', '/calendario');
+
+  render(
+    <Provider>
+      <Routes />
+    </Provider>,
+  );
+
+  expect(window.location.pathname).toBe('/calendario');
+
+  const homepageLink = document.querySelector('a[href="/"]');
+
+  expect(homepageLink).toBeTruthy();
+
+  fireEvent.click(homepageLink);
+
+  expect(window.location.pathname).toBe('/');
+});
+
 test('faz snapshot da App', () => {
   const { asFragment } = render(<App />);
 
