@@ -2,6 +2,7 @@ import { expect, test, vi } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 import Routes from './Routes';
 import { Provider } from './components/ui/provider';
+import App from './App';
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
@@ -18,8 +19,6 @@ Object.defineProperty(window, 'matchMedia', {
 });
 
 test('vai da homepage para o calendário pela navbar', () => {
-  window.history.pushState({}, '', '/');
-
   render(
     <Provider>
       <Routes />
@@ -31,4 +30,9 @@ test('vai da homepage para o calendário pela navbar', () => {
   fireEvent.click(screen.getByText('calendario'));
 
   expect(window.location.pathname).toBe('/calendario');
+});
+test('faz snapshot da App', () => {
+  const { asFragment } = render(<App />);
+
+  expect(asFragment()).toMatchSnapshot();
 });

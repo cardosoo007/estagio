@@ -1,0 +1,15 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`faz snapshot da App 1`] = `
+<DocumentFragment>
+  <div
+    class="pagina-principal"
+  >
+    <img
+      alt="Liga5"
+      class="logo"
+      src="/liga5.png"
+    />
+  </div>
+</DocumentFragment>
+`;
