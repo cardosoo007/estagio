@@ -12,12 +12,15 @@ import Admin from './admin/Admin';
 import Layout from './Layout.jsx';
 
 // Roteador principal da aplicação.
-// Define as rotas e qual componente renderiza para cada caminho.
+// Este ficheiro serve como o mapa da navegação do projeto: cada caminho da URL aponta para uma vista específica.
+// Quando se quiser adicionar uma nova página, este é um dos locais principais onde ela deve ser ligada ao sistema de rotas.
+// Também ajuda a perceber rapidamente qual componente corresponde a cada secção da aplicação.
 const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* O layout comum é renderizado para todas as rotas filhas */}
+        {/* O layout comum é aplicado a todas as rotas filhas, o que garante uma navbar, um footer e uma estrutura visual constante em todas as páginas. */}
+        {/* Todas as páginas da app passam por este ponto, o que faz com que a navegação e a experiência geral fiquem unificadas. */}
         <Route element={<Layout />}>
           <Route element={<Calendario />} path="/calendario" />
           <Route element={<Equipas />} path="/equipas" />

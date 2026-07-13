@@ -3,6 +3,9 @@ import { Badge, Box, Card, DatePicker, Heading, NativeSelect, Text } from '@chak
 import { parseDate } from '@internationalized/date';
 import { useTranslation } from 'react-i18next';
 
+// Lista de ligas disponíveis para o seletor do calendário.
+// Esta lista serve como referência para os nomes e códigos das ligas que o utilizador pode escolher.
+// Ter esta informação centralizada ajuda a manter o projeto organizado e evita divergências entre páginas.
 const ligas = [
   { codigo: 'PPL', nome: 'Primeira Liga' },
   { codigo: 'PL', nome: 'Premier League' },
@@ -12,6 +15,10 @@ const ligas = [
   { codigo: 'FL1', nome: 'Ligue 1' },
 ];
 
+// Página de calendário de jogos.
+// O fluxo desta página é bastante claro: quando a liga muda, é feito um pedido à API, os dados ficam guardados em estado
+// e depois são filtrados por data para mostrar apenas os jogos do dia selecionado.
+// Este é um bom exemplo de como o componente reage a alterações do utilizador e atualiza a interface de forma dinâmica.
 function Calendario() {
   const { t } = useTranslation();
   const [jogos, setJogos] = useState([]);
@@ -24,12 +31,15 @@ function Calendario() {
       .then(data => {
         setJogos(data);
 
+        // Quando a liga muda, escolhe-se automaticamente a primeira data disponível.
         if (data.length > 0) {
           setDataEscolhida(data[0].data);
         }
       });
   }, [ligaSelecionada]);
 
+  // Filtra os jogos para o dia que o utilizador escolheu no calendário.
+  // Sem este passo, a interface mostraria todos os jogos de todas as datas e seria mais confusa.
   const jogosDoDia = jogos.filter(jogo => jogo.data === dataEscolhida);
 
   return (

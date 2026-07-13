@@ -7,6 +7,9 @@ import LogoutButton from './LogoutButton';
 import { useTranslation } from 'react-i18next';
 import './Layout.css';
 
+// Lista de ligas suportadas pela aplicação.
+// Este array funciona como uma pequena base de dados local simples para os nomes das ligas.
+// É reutilizado em vários pontos da interface, o que facilita manter os dados consistentes e evita repetir manualmente a mesma informação.
 const ligas = [
   { codigo: 'PPL', nome: 'Primeira Liga' },
   { codigo: 'PL', nome: 'Premier League' },
@@ -16,7 +19,9 @@ const ligas = [
   { codigo: 'FL1', nome: 'Ligue 1' },
 ];
 
-// Layout comum da app: menu de navegação e localização do conteúdo.
+// Layout comum da aplicação.
+// Este componente é a estrutura base da app: junta a navegação superior, o conteúdo da página atual e o rodapé.
+// Como envolve todas as páginas, qualquer alteração aqui afeta toda a experiência visual da aplicação, por isso é importante saber que este é um ponto central.
 function Layout() {
   const { isAuthenticated, user } = useAuth0();
   const navigate = useNavigate();
@@ -30,6 +35,9 @@ function Layout() {
     filter: contains,
   });
 
+  // Redireciona para a página de detalhe da liga escolhida.
+  // O parâmetro vem do componente Combobox do Chakra UI e contém o código da liga selecionada pelo utilizador.
+  // Esta função é o ponto de ligação entre a interação do utilizador e a navegação da aplicação.
   function escolherLiga(event) {
     const codigoLiga = event.value[0];
 
@@ -41,13 +49,15 @@ function Layout() {
   return (
     <div>
       <nav className="navbar">
-        {/* Navegação principal do site */}
+        {/* Navegação principal do site. */}
+        {/* Estes links permitem saltar entre as secções principais da aplicação sem perder a estrutura geral do layout. */}
         <Link to="/">{t('paginaPrincipal')}</Link>
         <Link to="/calendario">{t('calendario')}</Link>
         <Link to="/classificacoes">{t('classificacoes')}</Link>
         <Link to="/equipas">{t('equipas')}</Link>
         <Link to="/configuracoes">{t('configuracoes')}</Link>
 
+        {/* Seletor de ligas com pesquisa local. */}
         <Combobox.Root collection={collection} width="180px" onInputValueChange={event => filter(event.inputValue)} onValueChange={escolherLiga}>
           <Combobox.Control>
             <Combobox.Input placeholder={t('pesquisarLiga')} />
@@ -88,14 +98,19 @@ function Layout() {
           )}
         </div>
       </nav>
-      {/* Aqui o componente da rota atual é renderizado */}
+
+      {/* Aqui é onde o componente correspondente à rota atual é renderizado dentro do layout. */}
+      {/* Este ponto é fundamental porque permite trocar o conteúdo da página sem mudar a navbar ou o footer. */}
       <Outlet />
+
       <footer className="footer">
         <div>
+          {/* Troca de idioma para português. */}
           <Button size="sm" variant="ghost" onClick={() => i18n.changeLanguage('pt')}>
             🇵🇹
           </Button>
 
+          {/* Troca de idioma para inglês. */}
           <Button size="sm" variant="ghost" onClick={() => i18n.changeLanguage('en')}>
             🇬🇧
           </Button>

@@ -3,17 +3,19 @@ import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 // Página de detalhe de uma equipa específica.
+// Este componente depende do parâmetro :id da rota /equipas/:id e pede ao backend os dados completos dessa equipa.
 function Equipa() {
   // Lê o id da equipa dos parâmetros da URL.
   // Exemplo: se o URL for /equipas/503, então id fica com o valor "503".
   const { id } = useParams();
 
   const { t } = useTranslation();
+
   // Guarda os dados da equipa que vêm do backend.
-  // Começa como objeto vazio porque ainda não recebemos a resposta da API.
+  // O valor inicial é um objeto vazio porque a resposta ainda não chegou quando o componente é montado.
   const [equipa, setEquipa] = useState({});
 
-  // Busca os detalhes da equipa quando o id da rota mudar.
+  // Busca os detalhes da equipa sempre que o id da rota muda.
   useEffect(() => {
     // Se por algum motivo o id ainda não existir, não fazemos o pedido.
     // Isto evita chamadas como /api/equipas/undefined.
@@ -21,12 +23,12 @@ function Equipa() {
       return;
     }
 
-    // Chamamos o nosso backend, não a football-data diretamente.
-    // O backend é que chama a API externa com o token, evitando problemas de CORS e escondendo a chave.
+    // Chamamos o nosso backend e não a API externa diretamente.
+    // O backend centraliza a autenticação e o acesso à informação externa, o que é mais seguro e mais limpo.
     fetch(`/api/equipas/${id}`)
       .then(response => response.json())
       .then(data => {
-        // Guardamos no estado a equipa devolvida pelo backend para a conseguir mostrar no JSX.
+        // Guardamos a resposta num estado para o JSX poder renderizar os dados de forma reativa.
         setEquipa(data);
       });
   }, [id]);
@@ -50,11 +52,12 @@ function Equipa() {
         {t('fundacao')}: {equipa.founded}
       </p>
       <h2>{t('jogadores')}</h2>
-      {/* squad é a lista de jogadores que vem dentro da resposta da equipa na football-data. */}
-      {/* O ?. evita erro enquanto equipa.squad ainda não existe, antes da resposta chegar. */}
+
+      {/* A propriedade squad contém a lista de jogadores devolvidos pela API. */}
+      {/* O operador ?. evita erros enquanto os dados ainda não foram carregados. */}
       {equipa.squad?.map(jogador => (
         <div key={jogador.id}>
-          {/* Cada jogador também vem da football-data, por isso usamos name, position e nationality. */}
+          {/* Cada jogador tem nome, posição e nacionalidade. */}
           <p>
             {t('nome')}: {jogador.name}
           </p>

@@ -16,10 +16,14 @@ const ligas = [
   { codigo: 'FL1', nome: 'Ligue 1' },
 ];
 
+// Página de classificações.
+// O componente carrega dados da API com React Query e depois ordena a tabela localmente no frontend.
 function Classificacoes() {
   const { t } = useTranslation();
+
   // Estado da liga selecionada no menu drop-down.
   const [ligaSelecionada, setLigaSelecionada] = useState('PPL');
+
   // Estado usado para saber qual coluna está ordenada e em que direção.
   // campo: guarda a coluna escolhida, por exemplo "marcados" ou "sofridos".
   // Quando campo é null, significa que ainda não clicámos em nenhuma coluna para ordenar.
@@ -59,7 +63,6 @@ function Classificacoes() {
       }
 
       // Se clicar numa coluna diferente, começamos essa coluna ordenada do maior para o menor.
-      // Isto cumpre o requisito: o primeiro clique deve ordenar por ordem decrescente.
       return {
         campo,
         direcao: 'desc',
@@ -69,8 +72,7 @@ function Classificacoes() {
 
   // Ordena localmente a tabela quando o utilizador clica nos cabeçalhos.
   // "Localmente" significa que não vamos buscar novos dados à API; só mudamos a ordem dos dados que já temos.
-  // Usamos [...classificacoes] para criar uma cópia, porque sort() altera o array onde é usado.
-  // Como classificacoes é um estado do React, é melhor não alterar esse array diretamente.
+  // Criamos uma cópia do array porque sort() altera o conteúdo original.
   const classificacoesOrdenadas = [...classificacoes].sort((a, b) => {
     if (!ordenacao.campo) {
       // Quando ainda não foi escolhida nenhuma coluna, mantemos a ordem original da API.
@@ -78,13 +80,10 @@ function Classificacoes() {
     }
 
     // Como GM e GS estão dentro do objeto golos, usamos ordenacao.campo para escolher qual deles comparar.
-    // Se ordenacao.campo for "marcados", isto vai buscar a.golos.marcados e b.golos.marcados.
-    // Se ordenacao.campo for "sofridos", isto vai buscar a.golos.sofridos e b.golos.sofridos.
-
     const valorA = ordenacao.campo === 'pontos' ? a.pontos : a.golos[ordenacao.campo];
     const valorB = ordenacao.campo === 'pontos' ? b.pontos : b.golos[ordenacao.campo];
+
     // Se a direção for desc, o maior vem primeiro. Se for asc, o menor vem primeiro.
-    // valorB - valorA coloca números maiores antes; valorA - valorB coloca números menores antes.
     return ordenacao.direcao === 'desc' ? valorB - valorA : valorA - valorB;
   });
 
@@ -101,7 +100,7 @@ function Classificacoes() {
       <h1>{t('classificacoes')}</h1>
 
       <div className="dropdown">
-        {/* Seletor de liga para filtrar as classificações */}
+        {/* Seletor de liga para filtrar as classificações. */}
         <NativeSelect.Root width="240px">
           <NativeSelect.Field value={ligaSelecionada} onChange={event => setLigaSelecionada(event.target.value)}>
             {ligas.map(liga => (
